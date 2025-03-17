@@ -108,7 +108,7 @@ python main.py --input path/to/your/audio.wav --output transcript.txt
 
 ## License
 
-[Specify your license here]
+MIT License
 
 ## Acknowledgments
 
