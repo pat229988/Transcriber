@@ -32,8 +32,8 @@ For a visual representation of how the system processes audio files:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/speaker-diarization-transcription.git
-   cd speaker-diarization-transcription
+   git clone https://github.com/pat229988/Transcriber.git
+   cd Transcriber
    ```
 
 2. **Create and activate a virtual environment (recommended):**
