@@ -53,6 +53,8 @@ For a visual representation of how the system processes audio files:
    python
    from pyannote.audio import Pipeline
    pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization-3.1",use_auth_token="YOUR_HF_TOKEN_HERE")
+   from pyannote.audio import Model
+   model = Model.from_pretrained("pyannote/embedding", use_auth_token="YOUR_ACCESS_TOKEN")
    exit()
    ```
 
