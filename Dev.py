@@ -83,6 +83,7 @@ class ModelLoader:
         self.device = device
         self.whisperx_device = self._get_whisperx_device()
         self._load_models()
+        self.auth_token = "YOUR_HF_TOKEN_HERE"
 
     def _get_whisperx_device(self) -> str:
         """Determine appropriate device for WhisperX"""
@@ -98,13 +99,13 @@ class ModelLoader:
         try:
             pipeline = Pipeline.from_pretrained(
                 "pyannote/speaker-diarization-3.1",
-                use_auth_token="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"
+                use_auth_token=self.auth_token
             ).to(self.device)
         except Exception as e:
             print(f"Diarization model loading warning: {e}")
             pipeline = Pipeline.from_pretrained(
                 "pyannote/speaker-diarization-3.1",
-                use_auth_token="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"
+                use_auth_token=self.auth_token
             )
         return pipeline
 
@@ -116,7 +117,7 @@ class ModelLoader:
         )
         embedding_model = Inference(
             "pyannote/embedding",
-            use_auth_token="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",
+            use_auth_token=self.auth_token,
             window="whole",
             device=self.device
         )
