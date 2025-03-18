@@ -6,16 +6,19 @@ import sounddevice as sd
 from sklearn.metrics.pairwise import cosine_similarity
 from pyannote.audio import Inference
 import argparse
-import librosa
+import torchaudio
 import torch
 import os
 from functools import lru_cache
 from collections import defaultdict
+from pathlib import Path
 
 os.environ["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
 
 def init_db():
-    conn = sqlite3.connect('data/speaker_profiles_1.db')
+    db_path = Path('data') / 'speaker_profiles_1.db'
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(db_path)
     c = conn.cursor()
     c.execute('''CREATE TABLE IF NOT EXISTS speakers
                  (id INTEGER PRIMARY KEY, name TEXT, embedding BLOB)''')
@@ -262,7 +265,12 @@ def export_transcript(transcript, speaker_names, output_file):
             f.write(f"[{entry['start']:.2f}-{entry['end']:.2f}] {speaker}: {entry['text']}\n")
 
 def process_audio(file_path, db):
-    audio, sr = librosa.load(file_path, sr=16000, mono=True)
+    audio, sr = torchaudio.load(file_path)
+    audio = audio.mean(dim=0)  # Convert to mono
+    if sr != 16000:
+        audio = torchaudio.functional.resample(audio, sr, 16000)
+    sr = 16000
+    # audio, sr = librosa.load(file_path, sr=16000, mono=True)
     audio_tensor = torch.tensor(audio, device="cpu").unsqueeze(0)
     
     diarization = perform_diarization(audio_tensor, sr)
