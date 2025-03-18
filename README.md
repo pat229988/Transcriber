@@ -47,7 +47,19 @@ For a visual representation of how the system processes audio files:
    pip install -r requirements.txt
    ```
 
-4. **Set up Hugging Face access:**
+   before the first run on windows run the following commands after installing all the required libraries.
+   ```bash
+   venv\Scripts\activate
+   python
+   from pyannote.audio import Pipeline
+   pipeline = Pipeline.from_pretrained("pyannote/speaker-diarization-3.1",use_auth_token="YOUR_HF_TOKEN_HERE")
+   exit()
+   ```
+
+
+
+
+5. **Set up Hugging Face access:**
    
    The system uses pyannote/speaker-diarization-3.1 which requires a Hugging Face token.
    
@@ -64,7 +76,7 @@ For a visual representation of how the system processes audio files:
                                       use_auth_token="YOUR_HF_TOKEN_HERE")
    ```
 
-5. **Create a data directory:**
+6. **Create a data directory:**
    ```bash
    mkdir data
    ```
